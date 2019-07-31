@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <ui:composition template="/WEB-INF/jsf/template/template.xhtml">
+        <ui:param name="title" value="PROJECT MANAGEMENT"/>
+        <ui:define name="content">
+            <h:form id="projectListForm">
+                <p:growl id="msgs" showDetail="true" sticky="true"/>
+
+                <p:dataTable
+                        id="projectTable"
+                        var="project"
+                        binding="#{table}"
+                        value="#{projectViewController.projects}"
+                        selectionMode="single"
+                        selection="#{projectViewController.selectedProject}"
+                        rowKey="#{project.id}"
+                        rows="10"
+                        paginator="true"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="10,20,50 ">
+                    <p:ajax event="rowSelect"
+                            listener="#{projectViewController.onRowSelect}"
+                            update=":projectListForm:msgs"/>
+                    <p:ajax event="rowUnselect"
+                            listener="#{projectViewController.onRowUnselect}"
+                            update=":projectListForm:msgs"/>
+                    <p:column headerText="#" width="10">
+                        <p:outputLabel value="#{table.rowIndex+1}"/>
+                    </p:column>
+
+                    <p:column headerText="ID" rendered="false">
+                        <p:outputLabel value="#{project.id}"/>
+                    </p:column>
+
+                    <p:column headerText="Name" sortable="true" sortBy="#{project.name}">
+                        <p:outputLabel value="#{project.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Data Begin" width="150" sortable="true" sortBy="#{project.dateBegin}">
+                        <p:outputLabel value="#{project.dateBegin}">
+                            <f:convertDateTime pattern="dd.MM.yyyy HH:mm"/>
+                        </p:outputLabel>
+                    </p:column>
+                    <p:column headerText="Data End" width="150" sortable="true" sortBy="#{project.dateEnd}">
+                        <p:outputLabel value="#{project.dateEnd}">
+                            <f:convertDateTime pattern="dd.MM.yyyy HH:mm"/>
+                        </p:outputLabel>
+                    </p:column>
+                    <p:column headerText="Status" width="150" sortable="true" sortBy="#{project.status}">
+                        <p:outputLabel value="#{project.status}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:panelGrid columns="1" style="width: 100%; text-align:left;margin-top: -1px;">
+                    <p:outputPanel>
+                        <p:commandButton
+                                value="Create"
+                                icon="pi pi-file"
+                                style="margin-top:10px;margin-bottom:10px;"
+                                action="#{projectViewController.projectCreate}">
+                            <p:ajax event="dialogReturn" update=":projectListForm:projectTable"/>
+                        </p:commandButton>
+
+                        <p:commandButton
+                                icon="pi pi-calendar"
+                                value="Tasks"
+                                style="margin-left:15px;"
+                                action="#{taskViewController.redirectToListTask(projectViewController.selectedProject)}"
+                                update=":projectListForm:msgs"
+                        />
+
+                        <p:commandButton
+                                update=":projectListForm:msgs"
+                                icon="pi pi-pencil"
+                                value="Edit"
+                                action="#{projectViewController.projectEdit}"
+                                style="margin-left:15px;">
+                            <p:ajax event="dialogReturn" update=":projectListForm:projectTable"/>
+                        </p:commandButton>
+
+                        <p:commandButton
+                                update="projectListForm"
+                                icon="pi pi-trash"
+                                value="Delete"
+                                style="margin-left:15px;"
+                                action="#{projectViewController.projectDelete}"
+                        />
+                    </p:outputPanel>
+                </p:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</f:view>
+</html>
