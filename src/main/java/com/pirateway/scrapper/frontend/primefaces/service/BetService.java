@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class BetService implements IBetService {
@@ -59,7 +60,7 @@ public class BetService implements IBetService {
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<Bet> findAll() throws DataValidateException {
+    public List<Bet> findAll() throws DataValidateException {
         return betRepository.findAll();
     }
 }

@@ -20,10 +20,11 @@
             <p:menubar>
                 <p:menuitem value="Home"
                             outcome="mainOutcome"
+                            action="#{elementViewController.getParsingData}"
                             icon="pi pi-home"
                             style="margin: 5px 0px 5px 5px;"/>
                 <p:menuitem rendered="#{elementViewController.visibleForUser}"
-                            value="Project"
+                            value="BetLive"
                             outcome="projectListOutcome"
                             icon="pi pi-briefcase"
                             style="margin: 5px 0px 5px 0px;"/>

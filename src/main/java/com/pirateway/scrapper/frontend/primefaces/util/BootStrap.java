@@ -1,17 +1,17 @@
 package com.pirateway.scrapper.frontend.primefaces.util;
 
+import com.pirateway.scrapper.frontend.primefaces.api.repository.IIBetRepository;
 import com.pirateway.scrapper.frontend.primefaces.api.service.IBetService;
 import com.pirateway.scrapper.frontend.primefaces.api.service.IForkService;
 import com.pirateway.scrapper.frontend.primefaces.api.service.IProjectService;
-import com.pirateway.scrapper.frontend.primefaces.enumerate.Status;
 import com.pirateway.scrapper.frontend.primefaces.exception.DataValidateException;
-import com.pirateway.scrapper.frontend.primefaces.model.dto.ProjectDTO;
 import com.pirateway.scrapper.frontend.primefaces.model.entity.Bet;
 import com.pirateway.scrapper.frontend.primefaces.model.entity.Fork;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,12 +32,19 @@ public class BootStrap {
     @Autowired
     IProjectService projectService;
 
+    @Autowired
+    private IIBetRepository betRepository;
+
     private static final String CHROME_DRIVER_PATH = "src/main/resources/chromedriver.exe";
 
     public void init() throws DataValidateException {
+//        betService.clear();
+        betRepository.clear();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
 
         System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new ChromeDriver(options);
         driver.get("https://positivebet.com/ru/bets/index");
 
         List<WebElement> rows = driver.findElements(By.xpath("//div[@id='gridBets']/table/tbody/tr"));
@@ -60,10 +67,6 @@ public class BootStrap {
             fork1 = row.findElement(By.xpath(EVENT_ONE_FORKS_COUNT));
             fork2 = row.findElement(By.xpath(EVENT_TWO_FORKS_COUNT));
 
-
-
-
-
             try {
                 eventOne = row.findElement(By.xpath(EVENT_ONE_DESCRIPTION_PART_ONE)).getText() +
                         row.findElement(By.xpath(EVENT_ONE_DESCRIPTION_PART_TWO)).getText();
@@ -73,7 +76,6 @@ public class BootStrap {
 
                 link1 = row.findElement(By.xpath(EVENT_ONE_LINK));
                 link2 = row.findElement(By.xpath(EVENT_TWO_LINK));
-
 
             } catch (Exception e) {
                 eventOne = "Скрыто!";
@@ -100,7 +102,7 @@ public class BootStrap {
                     forkType.getText(),
                     forkAge.getText());
 
-            forkService.create(fork);
+//            forkService.create(fork);
 
             Bet bet1 = new Bet(
                     "name",
@@ -115,7 +117,8 @@ public class BootStrap {
                     fork
             );
 
-            betService.create(bet1);
+            betRepository.add(bet1);
+//            betService.create(bet1);
 
             Bet bet2 = new Bet(
                     "name",
@@ -130,7 +133,8 @@ public class BootStrap {
                     fork
             );
 
-            betService.create(bet2);
+            betRepository.add(bet2);
+//            betService.create(bet2);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.pirateway.scrapper.frontend.primefaces.service;
 
 
+import com.pirateway.scrapper.frontend.primefaces.util.BootStrap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,15 @@ public class UserService implements IUserService {
 
     @NotNull
     private final IUserRepository userRepository;
+
+    @NotNull
+    @Autowired
+    private BootStrap bootStrap;
+
+    public void getParsingData() throws DataValidateException {
+        System.out.println("Parsing...");
+        bootStrap.init();
+    }
 
     @Autowired
     public UserService(
@@ -138,6 +148,7 @@ public class UserService implements IUserService {
                 .findByLogin(login);
         if (user == null) throw new AuthenticationSecurityException("Wrong user name!");
         if (!user.getPassword().equals(password)) throw new AuthenticationSecurityException("Wrong password!");
+//        getParsingData();
         return user.getDTO();
     }
 

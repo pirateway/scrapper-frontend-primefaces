@@ -1,5 +1,7 @@
 package com.pirateway.scrapper.frontend.primefaces.face;
 
+import com.pirateway.scrapper.frontend.primefaces.exception.DataValidateException;
+import com.pirateway.scrapper.frontend.primefaces.util.BootStrap;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
