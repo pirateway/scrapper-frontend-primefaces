@@ -21,15 +21,18 @@ public class BetScrapper {
     @Autowired
     IForkService forkService;
 
-
     private static final String CHROME_DRIVER_PATH = "src/main/resources/chromedriver.exe";
 
-    public void refresh() throws DataValidateException {
+    private final WebDriver driver;
 
+    public BetScrapper() {
         System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         driver.get("https://positivebet.com/ru/bets/index");
+    }
 
+    public void refresh() throws DataValidateException {
+        driver.navigate().refresh();
         List<WebElement> rows = driver.findElements(By.xpath("//div[@id='gridBets']/table/tbody/tr"));
         int i = 1;
         System.out.printf("%2s. %-10s %-45s %-10s %-85s %-85s", " №", "Вид", "Событие", "% дохода", "Ссылка1", "Ссылка2");
