@@ -3,7 +3,6 @@ package com.pirateway.scrapper.frontend.primefaces.util;
 import com.pirateway.scrapper.frontend.primefaces.model.dto.ProjectDTO;
 import com.pirateway.scrapper.frontend.primefaces.model.dto.TaskDTO;
 import com.pirateway.scrapper.frontend.primefaces.model.dto.UserDTO;
-import com.pirateway.scrapper.frontend.primefaces.model.entity.Bet;
 import com.pirateway.scrapper.frontend.primefaces.model.entity.Fork;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -113,14 +112,5 @@ public class DataValidator {
             throw new DataValidateException("Incorrect fork!");
         if (fork.getId() == null || fork.getId().isEmpty())
             throw new DataValidateException("Ford id not must be empty!");
-    }
-
-    public static void validateBet(
-            @Nullable final Bet bet
-    ) throws DataValidateException {
-        if (bet == null)
-            throw new DataValidateException("Incorrect bet!");
-        if (bet.getId() == null || bet.getId().isEmpty())
-            throw new DataValidateException("Bet id not must be empty!");
     }
 }

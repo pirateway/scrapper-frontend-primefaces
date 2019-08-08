@@ -16,21 +16,21 @@
         <p:outputPanel id="projectDetail" style="margin-top: 20px">
             <p:panelGrid columns="2" styleClass="ui-noborder" style="width: 100%">
                 <p:outputLabel for="id" value="Id:"/>
-                <p:outputLabel id="id" value="#{projectViewController.editProject.id}"/>
+                <p:outputLabel id="id" value="#{projectViewController.editFork.id}"/>
 
                 <p:outputLabel for="name" value="Name:"/>
-                <p:inputText id="name" value="#{projectViewController.editProject.name}"/>
+                <p:inputText id="name" value="#{projectViewController.editFork.name}"/>
 
                 <p:outputLabel for="description" value="Description:"/>
                 <p:inputTextarea id="description" rows="5" cols="65" style="width: 100%"
-                                 value="#{projectViewController.editProject.description}"/>
+                                 value="#{projectViewController.editFork.description}"/>
 
                 <p:outputLabel for="dateBegin" value="Date Begin:"/>
                 <p:calendar
                         id="dateBegin"
                         pattern="dd.MM.yyyy HH:mm"
                         showTime="true"
-                        value="#{projectViewController.editProject.dateBegin}"
+                        value="#{projectViewController.editFork.dateBegin}"
                         showOn="button">
                 </p:calendar>
 
@@ -39,11 +39,11 @@
                         id="dateEnd"
                         pattern="dd.MM.yyyy HH:mm"
                         showTime="true"
-                        value="#{projectViewController.editProject.dateEnd}"
+                        value="#{projectViewController.editFork.dateEnd}"
                         showOn="button">
                 </p:calendar>
                 <p:outputLabel for="status" value="Status:"/>
-                <p:selectOneMenu id="status" value="#{projectViewController.editProject.status}" style="width:125px">
+                <p:selectOneMenu id="status" value="#{projectViewController.editFork.status}" style="width:125px">
                     <f:selectItems var="status" value="#{projectViewController.statuses}" itemLabel="#{status}"
                                    itemValue="#{status}"/>
                 </p:selectOneMenu>

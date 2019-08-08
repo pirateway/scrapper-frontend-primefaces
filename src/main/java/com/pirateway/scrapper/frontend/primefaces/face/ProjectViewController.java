@@ -3,7 +3,6 @@ package com.pirateway.scrapper.frontend.primefaces.face;
 import com.pirateway.scrapper.frontend.primefaces.api.service.ISessionService;
 import com.pirateway.scrapper.frontend.primefaces.model.dto.ProjectDTO;
 import com.pirateway.scrapper.frontend.primefaces.model.dto.UserDTO;
-import com.pirateway.scrapper.frontend.primefaces.util.BootStrap;
 import com.pirateway.scrapper.frontend.primefaces.util.OptionsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -47,10 +46,6 @@ public class ProjectViewController {
     @Autowired
     private ISessionService sessionService;
 
-    @NotNull
-    @Autowired
-    private BootStrap bootStrap;
-
     public Collection<ProjectDTO> getProjects(
     ) throws AuthenticationSecurityException, DataValidateException {
         @NotNull final FacesContext context = FacesContext.getCurrentInstance();
@@ -60,7 +55,6 @@ public class ProjectViewController {
         sessionService.validate(session);
         @NotNull final UserDTO loggedUser = sessionService.getLoggedUser(session);
         projects = new ArrayList<>(projectService.findAllByUserId(loggedUser.getId()));
-        bootStrap.init();
         return projects;
     }
 

@@ -1,7 +1,7 @@
 package com.pirateway.scrapper.frontend.primefaces.util;
 
 public class ElementsPath {
-    public static final String FORK_TYPE = ".//td[1]/a[3]"; // - вид спорта
+    public static final String FORK_TYPE = ".//td[1]/a[3]/img"; // - вид спорта
     public static final String FORK_AGE = ".//td[1]/div/a"; // - возраст вилки
 
     public static final String PROFIT_PERCENT = ".//td[2]/nobr"; // - процент дохода с вилки

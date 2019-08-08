@@ -42,7 +42,11 @@ import org.springframework.stereotype.Controller;
         @URLMapping(
                 id = "registration",
                 pattern = "/registration",
-                viewId = "/WEB-INF/jsf/registration.xhtml")})
+                viewId = "/WEB-INF/jsf/registration.xhtml"),
+        @URLMapping(
+                id = "forkList",
+                pattern = "/fork/list",
+                viewId = "/WEB-INF/jsf/fork/forkList.xhtml")})
 public class AppViewController {
 }
 

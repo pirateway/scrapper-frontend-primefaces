@@ -51,7 +51,7 @@
                 </p:selectOneMenu>
                 <p:outputLabel for="project" value="Project:"/>
                 <p:selectOneMenu id="project" value="#{taskViewController.editTask.projectId}">
-                    <f:selectItems var="project" value="#{projectViewController.projects}" itemLabel="#{project.name}"
+                    <f:selectItems var="project" value="#{projectViewController.forks}" itemLabel="#{project.name}"
                                    itemValue="#{project.id}"/>
                     <f:selectItem itemLabel=""
                                   itemValue="#{null}"/>
