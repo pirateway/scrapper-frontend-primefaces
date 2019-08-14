@@ -21,6 +21,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -57,7 +58,7 @@ public class ForkViewController {
     }
 
     public void refreshForks(
-    ) throws DataValidateException {
+    ) throws DataValidateException, IOException {
         betScrapper.clear();
         betScrapper.refresh();
     }

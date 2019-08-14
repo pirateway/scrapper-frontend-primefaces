@@ -3,13 +3,14 @@ package com.pirateway.scrapper.frontend.primefaces.scrapper;
 import com.pirateway.scrapper.frontend.primefaces.api.service.IForkService;
 import com.pirateway.scrapper.frontend.primefaces.exception.DataValidateException;
 import com.pirateway.scrapper.frontend.primefaces.model.entity.Fork;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -21,20 +22,25 @@ public class BetScrapper {
     @Autowired
     IForkService forkService;
 
-    private static final String CHROME_DRIVER_PATH = "src/main/resources/chromedriver.exe";
+    public BetScrapper() throws IOException {
+        Document doc = Jsoup.connect("https://positivebet.com/ru/bets/index/").get();
 
-    private final WebDriver driver;
-
-    public BetScrapper() {
-        System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
-        driver = new ChromeDriver();
-        driver.get("https://positivebet.com/ru/bets/index");
+        Elements rows = doc.select("div#gridBets.grid-view").select("tbody");
+        for (Element row : rows.select("tr")) {
+            String forkType = row.select("td").get(0).select("a").get(2).select("img").attr("alt");
+            //String forkAge = row.select("td").get(1).select
+            System.out.println(forkType);
+        }
     }
 
-    public void refresh() throws DataValidateException {
-        driver.navigate().refresh();
-        List<WebElement> rows = driver.findElements(By.xpath("//div[@id='gridBets']/table/tbody/tr"));
-        int i = 1;
+    public void refresh() throws DataValidateException, IOException {
+        Document doc = Jsoup.connect("https://positivebet.com/ru/bets/index/").get();
+        Elements rows = doc.select("div#gridBets.grid-view");
+        for (Element element : rows.select("tr")) {
+            System.out.println(element.text());
+        }
+                //driver.findElements(By.xpath("//div[@id='gridBets']/table/tbody/tr"));
+        /*int i = 1;
         System.out.printf("%2s. %-10s %-45s %-10s %-85s %-85s", " №", "Вид", "Событие", "% дохода", "Ссылка1", "Ссылка2");
         System.out.println();
         for (WebElement row : rows) {
@@ -73,13 +79,13 @@ public class BetScrapper {
                 link2 = null;
             }
 
-           /* System.out.printf("%2d. %-10s %-45s %-10s %-85s %-85s",
+           *//* System.out.printf("%2d. %-10s %-45s %-10s %-85s %-85s",
                     i,
                     forkType.getAttribute("title"),
                     eventOne,
                     profit.getText(),
                     link1 != null ? link1.getAttribute("href") : "Скрыто!",
-                    link2 != null ? link2.getAttribute("href") : "Скрыто!");*/
+                    link2 != null ? link2.getAttribute("href") : "Скрыто!");*//*
 
             i++;
             //System.out.println();
@@ -104,7 +110,7 @@ public class BetScrapper {
 
             forkService.create(fork);
 
-        }
+        }*/
     }
 
     public void clear() throws DataValidateException {
