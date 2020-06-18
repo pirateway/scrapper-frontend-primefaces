@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<h:head></h:head>
+
+<h:body>
+    <p:outputPanel>
+        <p:button value="GOTO counter"/>
+    </p:outputPanel>
+
+    <p:spacer height="10"/>
+
+    <h:form>
+        <p:dataTable id="mainTable" var="user" value="#{userController.userList}">
+            <p:column headerText="ID" sortBy="#{user.id}" width="200">
+                <p:outputLabel value="#{user.id}"/>
+            </p:column>
+            <p:column headerText="NAME" sortBy="#{user.password}" width="200">
+                <p:outputLabel value="#{user.password}"/>
+            </p:column>
+            <p:column headerText="LOGIN" sortBy="#{user.login}" style="width: 100%">
+                <p:outputLabel value="#{user.login}"/>
+            </p:column>
+        </p:dataTable>
+
+        <p:spacer height="10"/>
+
+        <p:outputPanel>
+            <p:commandButton update="mainTable" value="CREATE USER" actionListener="#{userController.createUser}" />
+        </p:outputPanel>
+
+    </h:form>
+
+</h:body>
+
+</html>
